@@ -1,0 +1,66 @@
+<html>
+
+<head>
+    <script src="https://cloud.tinymce.com/5/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea' });</script> 
+    <title>
+        <?php echo $title;  ?>
+
+    </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/<?= $path; ?>/public/assets/css/main.css" /> />
+    <noscript>
+        <link rel="stylesheet" href="/<?= $path; ?>/public/assets/css/main.css" /> /></noscript>
+</head>
+
+<body class="is-preload">
+
+    <section id="banner">
+        <header>
+            <h2> Administration </h2>
+        </header>
+        <p> Bienvenue dans l'administration du site, vous pouvez modérer ou supprimer les commentaires, et gérer vos articles. 
+        </p>
+    </section>
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Main -->
+        <article class="container box style1">
+        <p>
+            <?php echo $content; ?>
+        </p>
+    </article>
+    </div>
+    <!-- Footer -->
+    <section id="footer">
+        <ul class="icons">
+            <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+            <li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+            <li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>
+            <li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+            <li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        </ul>
+        <div class="copyright">
+            <ul class="menu">
+                <li>&copy; Untitled. All rights reserved.</li>
+                <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="/<?= $path; ?>/public/assets/js/jquery.min.js"></script>
+    <script src="/<?= $path; ?>/public/assets/js/jquery.scrolly.min.js"></script>
+    <script src="/<?= $path; ?>/public/assets/js/jquery.poptrox.min.js"></script>
+    <script src="/<?= $path; ?>/public/assets/js/browser.min.js"></script>
+    <script src="/<?= $path; ?>/public/assets/js/breakpoints.min.js"></script>
+    <script src="/<?= $path; ?>/public/assets/js/util.js"></script>
+    <script src="/<?= $path; ?>/public/assets/js/main.js"></script>
+
+</body>
+
+</html>
