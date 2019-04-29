@@ -2,8 +2,7 @@
 
 class PostController
 {
-    
-    function displayPosts()
+     function displayPosts()
   {
     global $path;
     $postManager = new PostManager;
@@ -22,6 +21,7 @@ class PostController
     
     require('views/singlePostView.php');    
     }
+    
     
    public function editPost($post)
   	{
