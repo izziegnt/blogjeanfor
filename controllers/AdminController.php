@@ -13,19 +13,27 @@ class AdminController
     
    public function getAdminPage()
  {    
-        if (isset($_POST['title']))
+       
+    $safeInputAdmin = filter_input_array(INPUT_POST, [
+    
+    'title' => FILTER_SANITIZE_STRING,
+    'content' => FILTER_SANITIZE_STRING, 
+    'id' => FILTER_SANITIZE_NUMBER_INT
+]);
+                                         
+        if (!is_null($safeInputAdmin['title']))
        {
-           
+     
            $news = new Post(
                [
-                   'title'=> $_POST['title'],
-                   'content'=> $_POST['content']   
+                   'title'=> $safeInputAdmin['title'],
+                   'content'=> $safeInputAdmin['content']   
                ]
            );
            
-        if (isset($_POST['id']))
+        if (isset($safeInputAdmin['id']))
 	{
-	    $news->setId($_POST['id']);
+	    $news->setId($safeInputAdmin['id']);
 	}
 	  
 	if ($news->isValid())
@@ -45,6 +53,15 @@ class AdminController
        if(isset($this->_url[1]))
        {
            
+           if($this->_url[1] == "logout")
+           {
+
+             $userController = new UserController();
+             $userController->logout();
+             global $path; 
+             header('location:/'.$path. '/admin/');
+			 return;	
+           }
 					$cutUrl = explode("=", $this->_url[1]);
            
 
@@ -57,11 +74,7 @@ class AdminController
 						$postController->deletePost($cutUrl[1]);
 						break;
 						case "editPost":
-                        
-				//		$this->_post = $postController->editPost($cutUrl[1]);
-                          //  $postController->editPost($cutUrl[1]);
                          $news = $postController->onePost($cutUrl[1]);
-                          
 						break;
 						case "delete":
 						$commentController->deleteComment($cutUrl[1]);
@@ -69,33 +82,27 @@ class AdminController
                         case "moderate":
                         $commentController->moderateComment($cutUrl[1]);
                         break;
-                        case "logout=":
-						$userController = new UserController();
-						$userController->logout();
-						break;
+                
 					}
        }
         $reportedComments = $this->reportedComments();
         $posts = $this->listPosts();
-    global $path;
-    require('views/adminView.php');
-         
- 
+        global $path;
+        require('views/adminView.php');      
    }
     
     function listPosts(){
     $postManager = new PostManager(); // Création d'un objet
     $posts = $postManager->getPosts(); // Appel d'une fonction de cet objet
     return $posts;
-}
+   }
     
 
     public function reportedComments()
-  {    
+   {    
     $commentController = new CommentController();
     $reportedComments = $commentController->getReportedComments();
-    return $reportedComments;
-     
+    return $reportedComments;  
    }
 
 
@@ -112,7 +119,5 @@ class AdminController
 		return $this->_url;
 	}	
 }
-    
-
  
 
