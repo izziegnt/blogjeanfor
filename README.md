@@ -1,0 +1,2 @@
+# blogjeanfor
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6154313f2cef4ca5857313b012a8c9c6)](https://app.codacy.com/app/izziegnt/blogjeanfor?utm_source=github.com&utm_medium=referral&utm_content=izziegnt/blogjeanfor&utm_campaign=Badge_Grade_Dashboard)
