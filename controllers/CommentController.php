@@ -2,29 +2,30 @@
 class CommentController
 {
     protected $errors;
-        
-    public function addComment()
+    
+    public function addComment($safeInput)
   	{			
 		$errors = [];
-
-		if(!isset($_POST['author']) || empty($_POST['comment']) || !isset($_POST['comment']) || empty($_POST['comment'])) { 
+           
+		if ($safeInput['author'] === null || $safeInput['comment'] === null) 
+        { 
 			$errors = "Veuillez remplir tous les champs !";}
 
-		if(!preg_match('`^[[:alnum:]]{3,15}$`',$_POST['author'])) {
+		if(!preg_match('`^[[:alnum:]]{3,15}$`',$safeInput['author'])) {
 			$errors = "Pseudo incorrect";
 			return $errors;
 		}
 
-		if(!isset($_POST['post_id']) || empty($_POST['post_id'])) { 
+		if ($safeInput['post_id'] === null) { 
 			$errors = "Il n'y a pas d'articles pour ce commentaire";
 		}
 
 		if(empty($errors)) {
 			$commentManager = new CommentManager();
-			$commentManager->addComment($_POST['author'], $_POST['comment'], $_POST['post_id']);
+			$commentManager->addComment($safeInput['author'], $safeInput['comment'], $safeInput['post_id']);
   		}
   	}
-        
+   
  public function getReportedComments()
   	{
   		$commentManager = new CommentManager();
