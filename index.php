@@ -13,35 +13,8 @@ spl_autoload_register(function ($class) {
 });
 
     $array = explode("/", filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL, FILTER_FLAG_STRIP_HIGH | FILTER_FLAG_STRIP_LOW));
-    
-   // secure all Post data 
-// comment post data
-if(isset($_POST['submit']))
-{
-$author = $_POST['author'];
-$author = filter_input(INPUT_POST, 'author', FILTER_SANITIZE_STRING);
-
-$comment = $_POST['comment'];
-$comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
-
-$post_id = $_POST['post_id'];
-$post_id = filter_input(INPUT_POST, 'post_id', FILTER_SANITIZE_NUMBER_INT); 
-}
-
-// admin post data
-if(isset($_POST['submit']))
-{
-$title = $_POST['title'];
-$title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
-
-$content = $_POST['content'];
-$content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
-
-$id = $_POST['id'];
-$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
-}
-
-$url = array_slice($array, 2);
+  
+$url = array_slice($array, 2); 
     
 try {
     if (isset($url[0]))
@@ -53,14 +26,22 @@ try {
               break;
         case "postsimple":
             
+              $safeInput = filter_input_array(INPUT_POST, [ 
+       'author'  => FILTER_SANITIZE_STRING,
+       'comment' => FILTER_SANITIZE_STRING,
+       'addComment' => FILTER_SANITIZE_STRING,
+       'post_id' => FILTER_SANITIZE_NUMBER_INT 
+       ]);
+              
+              
             if(isset($url[1]) && ($url[1] > 0))
-            {
-                if (isset($_POST['addComment']))
+            { //die(var_dump($safeInput));
+                if ($safeInput['addComment'] !== null)
                 {
-                    if(isset($_POST['author']) && (isset($_POST['comment']))) {
+                    if ($safeInput['author'] !== null && $safeInput['comment'] !== null) {
             
                         $commentController = new CommentController;
-                        $commentController->addComment();
+                        $commentController->addComment($safeInput);
                         if(!empty($commentController->errors())){
                             $commentController->errors();
                         }  
@@ -122,4 +103,3 @@ catch(Exception $e)
 {
     echo 'Erreur : ' .$e->getMessage();
 }
- 
